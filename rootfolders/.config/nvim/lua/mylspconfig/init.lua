@@ -1,10 +1,72 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
-	ensure_installed = { "csharp_ls", "lua_ls"}
+	ensure_installed = {"lua_ls"}
 })
 
-
 local cmp = require("cmp")
+
+local function up(fallback)
+if cmp.visible() then
+	cmp.select_next_item()
+else
+fallback()
+end
+end
+local function down(fallback)
+if cmp.visible() then
+	cmp.select_prev_item()
+else
+fallback()
+end
+end
+
+local function confirm(fallback)
+if cmp.visible() then
+	cmp.confirm()
+else
+fallback()
+end
+end
+
+local function abort(fallback)
+if cmp.visible() then
+	cmp.abort()
+else
+	cmp.complete()
+end
+end
+
+local function scroll_up(fallback)
+if cmp.visible() then
+	cmp.scroll_docs(-4)
+else
+fallback()
+end
+end
+
+local function scroll_down(fallback)
+if cmp.visible() then
+	cmp.scroll_docs(4)
+else
+fallback()
+end
+end
+
+local cmp_mappings = {
+	['<C-j>'] = up,
+	['<C-k>'] = down,
+	['<C-f>'] = scroll_up,
+	['<C-d>'] = scroll_down,
+	['<Tab>'] = confirm,
+	['<C-Space>'] = abort,
+}
+
+local cmp_cmd_mappings = {
+	['<C-j>'] = cmp.mapping(up, { 'c' }),
+	['<C-k>'] = cmp.mapping(down, { 'c' }),
+	['<Tab>'] = cmp.mapping(confirm, { 'c' }),
+	['<C-Space>'] = cmp.mapping(abort, { 'c' })
+}
 cmp.setup({
 	snippet = {
       -- REQUIRED - you must specify a snippet engine
@@ -12,36 +74,7 @@ cmp.setup({
          require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
       end,
     },
-	mapping = {
-		['<C-j>'] = function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			else
-			fallback()
-			end
-		end,
-		['<C-k>'] = function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			else
-			fallback()
-			end
-		end,
-		['<Tab>'] = function(fallback)
-			if cmp.visible() then
-				cmp.confirm()
-			else
-			fallback()
-			end
-		end,
-		['<C-Space>'] = function(fallback)
-			if cmp.visible() then
-				cmp.abort()
-			else
-				cmp.complete()
-			end
-		end
-	},
+	mapping = cmp_mappings,
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
 		{ name = 'luasnip' },
@@ -56,7 +89,7 @@ cmp.setup({
 })
 
 cmp.setup.cmdline(':', {
-	mapping = cmp.mapping.preset.cmdline(),
+	mapping = cmp_cmd_mappings,
     sources = cmp.config.sources({
       { name = 'path' }
     }, {
@@ -84,14 +117,6 @@ end
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local omnisharp_bin = "Programming/LanguageServers/omnisharp-osx-arm64-net6.0/OmniSharp"
-require("lspconfig").omnisharp_mono.setup{
-	on_attach = on_attach,
-	capabilities = capabilities,
-	{
-		cmd = omnisharp_bin
-	}
-}
 
 require("lspconfig").lua_ls.setup{
 	on_attach = on_attach,
