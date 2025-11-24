@@ -3,24 +3,17 @@ require("tdawg")
 require("lazy").setup(
 	{
 		{'nvim-telescope/telescope.nvim',
-			branch = '0.1.x' ,
+			branch = 'master' ,
 			dependencies = { 'nvim-lua/plenary.nvim' },
-			config = function()
-				local builtin = require('telescope.builtin')
-				vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-				vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-				vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-				vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-			end
 		},
 		{
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
 			config = function ()
-				local configs = require("nvim-treesitter.configs")
+				local configs = require("nvim-treesitter")
 
 				configs.setup({
-					ensure_installed = { "c_sharp", "lua", "vim", "query", "javascript", "html", "sql"},
+					ensure_installed = {"lua", "vim", "query", "javascript", "html"},
 					sync_install = false,
 					highlight = { enable = true },
 					indent = { enable = true }
@@ -29,14 +22,15 @@ require("lazy").setup(
 		},
 		{
 			'preservim/nerdtree'
-		},{
-			'williamboman/mason.nvim',
 		},
-		{
-			'williamboman/mason-lspconfig.nvim',
-		},
+		--{
+		--	'williamboman/mason.nvim',
+		--},
+		--{
+		--	'williamboman/mason-lspconfig.nvim',
+		--},
 
-		-- LSP
+		--LSP
 		{
 			'neovim/nvim-lspconfig'
 		},

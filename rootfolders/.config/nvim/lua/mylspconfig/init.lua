@@ -1,7 +1,7 @@
-require("mason").setup()
-require("mason-lspconfig").setup({
-	ensure_installed = {"lua_ls"}
-})
+--require("mason").setup()
+--require("mason-lspconfig").setup({
+--	ensure_installed = {"lua_ls"}
+--})
 
 local cmp = require("cmp")
 
@@ -118,23 +118,32 @@ end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-require("lspconfig").lua_ls.setup{
+vim.lsp.config('lua_ls',  {
 	on_attach = on_attach,
-	capabilities = capabilities
+	capabilities = capabilities,
+	filetypes = { "lua" },
+	cmd = {
+		"lua-language-server"
+	}
+})
+
+vim.lsp.enable('lua_ls')
+
+--rust analyzer depends on both itself and cargo,
+--so make sure Cargo is installed
+vim.lsp.config.rust_analyzer = {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	filetypes = { 'rust' },
+	cmd = {
+		'rust-analyzer'
+	}
 }
 
-require("lspconfig").rust_analyzer.setup{
-	on_attach = on_attach,
-	capabilities = capabilities
-}
+vim.lsp.enable('rust_analyzer')
 
-require("lspconfig").angularls.setup{
-	on_attach = on_attach,
-	capabilities = capabilities
-}
-
-require("lspconfig").sqlls.setup{
-	on_attach = on_attach,
-	capabilities = capabilities
-}
+--vim.lsp.config.sqlls.setup{
+--	on_attach = on_attach,
+--	capabilities = capabilities
+--}
 
