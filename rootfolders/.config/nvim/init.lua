@@ -46,6 +46,8 @@ require("lazy").setup(
 
 		--multi cursor
 		'mg979/vim-visual-multi',
+		--smear cursor
+		{'sphamba/smear-cursor.nvim'},
 		--Color schemes
 		'tjdevries/colorbuddy.vim',
 		--SQL
