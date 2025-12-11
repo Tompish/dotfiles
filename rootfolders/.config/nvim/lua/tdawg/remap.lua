@@ -11,6 +11,9 @@ vim.keymap.set("n", "<leader>q", vim.lsp.buf.code_action, { desc = 'Open diagnos
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = 'Open diagnostic Error' })
 vim.keymap.set("n", "<leader>gt", vim.diagnostic.goto_next, { desc = 'Go to error' })
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { desc = 'Rename workspace variable' })
+vim.keymap.set("n", "<leader>vs", function() vim.cmd('Git') end, { desc = 'Go to error' })
+vim.keymap.set("n", "<leader>vl", function() vim.cmd([[getdiff //2]]) end, { desc = 'Get left git diff' })
+vim.keymap.set("n", "<leader>vr", function() vim.cmd([[getdiff //3]]) end, { desc = 'Get right git diff' })
 
 vim.opt.nu = true
 vim.opt.rnu = true

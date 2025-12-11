@@ -20,9 +20,8 @@ require("lazy").setup(
 				})
 			end
 		},
-		{
-			'preservim/nerdtree'
-		},
+		"stevearc/oil.nvim",
+		{ 'preservim/nerdtree' },
 		--{
 		--	'williamboman/mason.nvim',
 		--},
@@ -44,14 +43,19 @@ require("lazy").setup(
 		--Function signature
 		'hrsh7th/cmp-nvim-lsp-signature-help',
 
+		--Git related
+		'tpope/vim-fugitive',
+
 		--multi cursor
 		'mg979/vim-visual-multi',
-		--smear cursor
-		{'sphamba/smear-cursor.nvim'},
+		--Smear cursor
+		{'sphamba/smear-cursor.nvim', opts = {}},
+
 		--Color schemes
-		'tjdevries/colorbuddy.vim',
-		--SQL
+		'folke/tokyonight.nvim',
+		'uhs-robert/oasis.nvim',
 		'ellisonleao/gruvbox.nvim',
+		--SQL
 		{
 			'kristijanhusak/vim-dadbod-ui',
 			dependencies = {

@@ -112,7 +112,9 @@ local map = function(key, command, desc)
 end
 	map('gd', require('telescope.builtin').lsp_definitions, 'Go To Definition')
 	map('gr', require('telescope.builtin').lsp_references, 'Go To references')
-	map('gI', require('telescope.builtin').lsp_implementations, 'Go To implementation')
+	map('gi', require('telescope.builtin').lsp_implementations, 'Go To implementation')
+	map('gs', require('telescope.builtin').lsp_workspace_symbols, 'Go To symbol')
+	map('gS', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Go To symbol whole project')
 	map('K', vim.lsp.buf.hover, 'Hover documentation')
 end
 
@@ -134,10 +136,6 @@ vim.lsp.enable('lua_ls')
 vim.lsp.config.rust_analyzer = {
 	on_attach = on_attach,
 	capabilities = capabilities,
-	filetypes = { 'rust' },
-	cmd = {
-		'rust-analyzer'
-	}
 }
 
 vim.lsp.enable('rust_analyzer')
